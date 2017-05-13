@@ -41,4 +41,6 @@ NOTES:
 
 - Figures 3 and 4 produce .mat data files that is on the order of 1GB in size.
 
+- All of the figures depend on outcomes of random number generators and the simulations in the manuscript were not seeded manually, so they cannot be reproduced exactly.  In this version of the code, the random number generators are seeded manually, so the results should be consistent (but will still be slightly different from that in the manuscript).
+
 - For questions about the code, please e-mail Robert Rosenbaum (currently at Robert.Rosenbaum@nd.edu)
