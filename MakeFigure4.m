@@ -3,7 +3,10 @@ clear
 close all
 load NetworkSimForFigure4
 
+rng(1)
+
 figure
+
 
 %%%%%%%%%%%%%%%%%%%%%
 % Make raster plot
@@ -40,7 +43,7 @@ plot((s(1,Iplot))/1000,neuroninds,'k.','MarkerSize',mrkrsz)
 winsize=250;
 
 % bins for distances
-distbins=[0 .025:.025:.45];
+distbins=[0 .025:.025:.6];
 
 % number of cells to sample
 nc=5000;
@@ -120,12 +123,17 @@ end
 
 % Plot correlations
 subplot(2,3,3)
-plot(distbins,SCcorrSimMean,'k','Linewidth',1.5)
+plot(distbins,zeros(size(distbins))+mean(SCorree),'--','Color',[.5 .5 .5],'LineWidth',1.5)
 hold on
+plot(distbins,SCcorrSimMean,'k','Linewidth',1.5)
 axis([-.02 .47 min(SCcorrSimMean-SCcorrSimErr)-.05e-1 max(SCcorrSimMean+SCcorrSimErr)+.05e-1])
 
+% Load theoretical correlations
+load TheoreticalCorrsForFig4;
+plot(DistancesTh(DistancesTh<=max(distbins)),CorrsTh(DistancesTh<=max(distbins)),'r--','LineWidth',1.5);
+
 % Plot correlation distribution
-[h,b]=hist(SCorree,100);
+[h,b]=hist(SCorree,200);
 h=h./trapz(b,h);
 subplot(2,3,5)
 plot(b,h,'k','Linewidth',2)
@@ -233,22 +241,23 @@ plot(bd,mTotalCovs./mFFCovs(1),'k','LineWidth',2)
 axis tight
 
 
-% Current distributions
+% Current distributions, normalize x-axis by rheobase to measure current
+% in units of rheobase
 Grheobase=CalcRheoBaseEIF(Cm(1),gl(1),vl(1),DeltaT(1),vT(1),vth(1),vl(1),0,10,1000,dt,20);
 subplot(2,3,6)
-[h,b]=hist((Ie(:)+IF(:))/Grheobase,100);
+[h,b]=hist((Ie(:)+IF(:)),200);
 h=h./trapz(b,h);
-plot(b,h,'b','LineWidth',2)
+plot(b/Grheobase,h,'b','LineWidth',2)
 hold on
-plot(mean(Ie(:)+IF(:))/Grheobase+[0 0],[0 .02],'b','LineWidth',2)
-[h,b]=hist(Ii(:)/Grheobase,100);
+plot(mean(Ie(:)+IF(:))/Grheobase+[0 0],[0 .04],'b','LineWidth',2)
+[h,b]=hist(Ii(:),200);
 h=h./trapz(b,h);
-plot(b,h,'r','LineWidth',2)
-plot(mean(Ii(:))/Grheobase+[0 0],[0 .02],'r','LineWidth',2)
-[h,b]=hist((Ie(:)+IF(:)+Ii(:))/Grheobase,100);
+plot(b/Grheobase,h,'r','LineWidth',2)
+plot(mean(Ii(:))/Grheobase+[0 0],[0 .04],'r','LineWidth',2)
+[h,b]=hist((Ie(:)+IF(:)+Ii(:)),200);
 h=h./trapz(b,h);
-plot(b,h,'k','LineWidth',2)
-plot(mean(Ii(:)+Ie(:)+IF(:))/Grheobase+[0 0],[0 .02],'k','LineWidth',2)
+plot(b/Grheobase,h,'k','LineWidth',2)
+plot(mean(Ii(:)+Ie(:)+IF(:))/Grheobase+[0 0],[0 .04],'k','LineWidth',2)
 axis tight
 temp=axis;
 temp(1)=-29;

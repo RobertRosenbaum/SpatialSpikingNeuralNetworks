@@ -3,6 +3,8 @@
 clear
 close all
 
+rng(1)
+
 % Time this script
 tic
 
@@ -58,10 +60,9 @@ sigmaffwd=.1;
 sigmarec=.25;
 
 % Time constants
-%taujitter=0;
 tausyne=6;
 tausyni=5;
-tausynF=tausyne+1;
+tausynF=tausyne;
 
 % Random Excitatory neurons to record 
 % currents and voltages from
@@ -153,6 +154,7 @@ V0=(V0max-V0min).*rand(N,1)+V0min;
 % Run simulation
 [s,IF,Ie,Ii,~]=EIF2DSpatialNetworkNoJitter(sF,NF1,Ne1,Ni1,JeF,JiF,Jee,Jei,Jie,Jii,KeF,KiF,Kee,Kei,Kie,Kii,betaeF,betaiF,betaee,betaei,betaie,betaii,Cm,gl,vl,DeltaT,vT,tref,vth,vre,vlb,tausynF,tausyne,tausyni,V0,T,dt,maxns,Irecord);
 
+
 % Get rid of padded zeros
 s=s(:,s(2,:)~=0);
 
@@ -164,7 +166,7 @@ disp(sprintf('\nFiring rates from sim: re=%.2f, ri=%.2f Hz',reSim,riSim))
 
 % How long did the simulation take
 t0=toc;
-disp(sprintf('\nSimulation time: %.1f min',t0/60))
+disp(sprintf('\nSimulation time for Fig4: %.1f min',t0/60))
 
 % Save simulation data
 save NetworkSimForFigure4.mat

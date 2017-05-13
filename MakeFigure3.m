@@ -3,6 +3,8 @@ clear
 close all
 load NetworkSimForFigure3
 
+rng(2)
+
 figure
 
 %%%%%%%%%%%%%%%%%%%%%
@@ -268,18 +270,18 @@ axis tight
 % Current distributions
 Grheobase=CalcRheoBaseEIF(Cm(1),gl(1),vl(1),DeltaT(1),vT(1),vth(1),vl(1),0,10,1000,dt,20);
 subplot(2,3,6)
-[h,b]=hist((Ie(:)+IF(:))/Grheobase,100);
+[h,b]=hist((Ie(:)+IF(:)),200);
 h=h./trapz(b,h);
-plot(b,h,'b','LineWidth',2)
+plot(b/Grheobase,h,'b','LineWidth',2)
 hold on
 plot(mean(Ie(:)+IF(:))/Grheobase+[0 0],[0 .02],'b','LineWidth',2)
-[h,b]=hist(Ii(:)/Grheobase,100);
+[h,b]=hist(Ii(:),200);
 h=h./trapz(b,h);
-plot(b,h,'r','LineWidth',2)
+plot(b/Grheobase,h,'r','LineWidth',2)
 plot(mean(Ii(:))/Grheobase+[0 0],[0 .02],'r','LineWidth',2)
-[h,b]=hist((Ie(:)+IF(:)+Ii(:))/Grheobase,100);
+[h,b]=hist((Ie(:)+IF(:)+Ii(:)),200);
 h=h./trapz(b,h);
-plot(b,h,'k','LineWidth',2)
+plot(b/Grheobase,h,'k','LineWidth',2)
 plot(mean(Ii(:)+Ie(:)+IF(:))/Grheobase+[0 0],[0 .02],'k','LineWidth',2)
 axis tight
 temp=axis;

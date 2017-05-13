@@ -3,6 +3,8 @@
 clear
 close all
 
+rng(1)
+
 % Time this script
 tic
 
@@ -164,7 +166,7 @@ disp(sprintf('\nFiring rates from sim: re=%.2f, ri=%.2f Hz',reSim,riSim))
 
 % How long did the simulation take
 t0=toc;
-disp(sprintf('\nSimulation time: %.1f min',t0/60))
+disp(sprintf('\nSimulation time for Fig3: %.1f min',t0/60))
 
 % Save simulation data
 save NetworkSimForFigure3.mat
