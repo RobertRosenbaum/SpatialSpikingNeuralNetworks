@@ -115,9 +115,7 @@ axis(temp);
 
 %%%%% Now for L4
 clear s;
-%load NetworkSimForFigure6LGNtoL4.mat
-pathA='/Users/rjrosenbaum/Data/Asynch/';
-load([pathA 'NetworkSimLGNL4.mat'])
+load NetworkSimForFigure6LGNtoL4.mat
 
 s=s0;
 clear s0;
